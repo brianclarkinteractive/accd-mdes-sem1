@@ -14,34 +14,13 @@
 <body>
     <header>
         <button role="button" id="colorChange">Click me</button>
+        <button role="button" id="addText">Don't click me</button>
+        <button role="button" id="imageBtn">Create image</button>
     </header>
     <main id="mainSection">
        
     </main>    
    
-    <script>
-        let colorBtn = document.getElementById("colorChange")
-        const mainSect = document.getElementById("mainSection")
-
-        console.log(colorBtn)
-       
-
-        colorBtn.addEventListener("pointerenter", () => {
-            let red = Math.random()*255
-            let blue = Math.random()*255
-            let green = Math.random ()*255
-            console.log(blue)
-
-            mainSect.style.backgroundColor = "rgb(" + red + "," + green +", " + blue +")"
-        })
-        colorBtn.addEventListener("pointerleave", () => {
-            let red = Math.random()*255
-            let blue = Math.random()*255
-            let green = Math.random ()*255
-            console.log(blue)
-
-            mainSect.style.backgroundColor = "rgb(" + red + "," + green +", " + blue +")"
-        })
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
