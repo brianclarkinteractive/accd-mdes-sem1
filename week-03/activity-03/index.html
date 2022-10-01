@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        
+    </header>
+        
+    <main>
+        <!-- The grid: four columns -->
+        <div class="row" style="margin:auto;">
+            <div class="column">
+            <img class="imgThumb" src="https://i.ibb.co/qd4K03R/Michael-Jordan-UNC-Deadfellaz.png" alt="Michael Jordan UNC Deadfellaz
+            Derivative" onclick="myFunction(this);">
+            </div>
+            <div class="column">
+            <img class="imgThumb" src="https://i.ibb.co/B48LpJT/Michael-Jordan-Jam-Deadfellaz.png" alt="Michael Jordan Jam Deadfellaz
+            Derivative" onclick="myFunction(this);">
+            </div>
+            <div class="column">
+            <img class="imgThumb" src="https://i.ibb.co/vs1W5dW/Michael-Jordan-Crying-Deadfellaz.png" alt="Michael Jordan Crying Deadfellaz
+            Derivative" onclick="myFunction(this);">
+            </div>
+        </div>
+        
+        <!-- The expanding image container -->
+        <div class="container">
+            <!-- Close the image -->
+            <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+        
+            <!-- Expanded image -->
+            <img id="expandedImg" style="width:100%">
+        
+            <!-- Image text -->
+            <div id="imgtext"></div>
+        </div>
+
+
+    </main> 
+   
+    <script src="script.js"></script>
+</body>
+</html>
