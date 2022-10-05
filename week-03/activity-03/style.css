@@ -36,7 +36,7 @@
   /* The expanding image container (positioning is needed to position the close button and the text) */
   .container {
     position: relative;
-    display: none;
+    display: block;
   }
   
   /* Expanding image text */
