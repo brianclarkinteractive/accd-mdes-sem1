@@ -1,14 +1,19 @@
 /* Image style */
 .imgThumb { 
-    width: 200px;
-    height: 200px;
+    width: 192px;
+    height: 192px;
+    /*
+    border: 2px solid white;
+    box-shadow: inset 0px 1px 0px 0px white;
+    box-sizing: border-box; */
+    border-radius: 16px;
 }
 
 /* The grid: Four equal columns that floats next to each other */
 .column {
     float: left;
-    width: 25%;
-    padding: 8px;
+    width: 192px;
+    padding: 4px;
   }
   
   /* Style the images inside the grid */
@@ -36,11 +41,16 @@
   
   /* Expanding image text */
   #imgtext {
+    font-family: arial;
     position: absolute;
     bottom: 15px;
     left: 15px;
     color: black;
-    font-size: 20px;
+    background-color: rgba(255, 255, 255, .2);
+    font-size: 16px;
+    padding: 4px 8px 4px 8px;
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
   }
   
   /* Closable button inside the image */
