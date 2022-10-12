@@ -26,9 +26,9 @@ function setup() {
   }
 }
 
-//function preload() { //ensure that the audio will be ready when it is called for
-//  song = loadSound("TC.mp3"); //locating the audio file and giving it a variable name of "song"
-//} 
+function preload() { //ensure that the audio will be ready when it is called for
+  song = loadSound("can-1.mp3"); //locating the audio file and giving it a variable name of "song"
+} 
 
 function draw() {
   background(255, 253, 235); //light pinky-red to compliment the rectangle colors 
@@ -60,11 +60,11 @@ function draw() {
 }
 
  //I want the audio to only play when the mouseis pressed, and if you click again the song will stop
-//function mousePressed() {
- // if (song.isPlaying()) { 
- //   song.stop(); //if the mouse is pressed the audio will stop if already playing 
- // } else {
-//    song.play(); //if the mouse is pressed the audio will play / restart song
-//  }
-//}
+function mousePressed() {
+  if (song.isPlaying()) { 
+    song.stop(); //if the mouse is pressed the audio will stop if already playing 
+  } else {
+    song.play(); //if the mouse is pressed the audio will play / restart song
+  }
+}
 
