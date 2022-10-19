@@ -36,9 +36,9 @@ function draw() {
   function setup() {
     var canvas = createCanvas(400, 400);
    
-    // Move the canvas so it’s inside our <div id="sketch-holder">.
+    // Move the canvas so it’s inside our <div id="sketch-frame">.
     canvas.parent('sketch-frame');
   
-    background(255);
+    background(255, 255, 255);
   }
 }
