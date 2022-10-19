@@ -18,6 +18,12 @@ function draw() {
     45, 45);
   xpos += 0.05;
   ypos += 0.04;
+  rect(
+    55+sin(xpos)*5,
+    55+sin(ypos)*5,
+    90, 90);
+  xpos += 0.02;
+  ypos += 0.10;
   if (millis() > nextChange) {
     r = random(0, 255);
     g = random(0, 255);
