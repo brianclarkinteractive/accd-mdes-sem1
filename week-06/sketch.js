@@ -1,8 +1,8 @@
 const planets = [];
 
 function setup() {
-  createCanvas(400, 400);
-
+  var canvas = createCanvas(400, 400);
+  canvas.parent('sketch-frame');
   planets.push(new Planet(width * 0.75, height * 0.5));
 }
 
@@ -120,7 +120,3 @@ class Dot {
     circle(this.x, this.y, 10 / (4 - this.layer));
   }
 }
-function setup() { 
-  var canvas = createCanvas(400, 400);
-  canvas.parent('sketch-frame');
-} 
