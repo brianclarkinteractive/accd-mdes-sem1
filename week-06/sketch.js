@@ -1,8 +1,8 @@
 const planets = [];
 
 function setup() {
-  var canvas = createCanvas(400, 400);
-  canvas.parent('sketch-frame');
+  //createCanvas(400, 400);
+
   planets.push(new Planet(width * 0.75, height * 0.5));
 }
 
@@ -11,12 +11,13 @@ function mousePressed() {
 }
 
 function draw() {
-  background(32);
+  background(0, 85);
+  noStroke();
   for (const dot of dots) {
     dot.draw();
   }
   // sun
-  fill(255, 255, 0);
+  fill(255, 165, 0);
   circle(width / 2, height / 2, 50);
 
   for (const planet of planets) {
@@ -30,11 +31,11 @@ class Planet {
     this.y = y;
 
     // random size
-    this.size = random(10, 50);
+    this.size = random(8, 32);
 
     // random speed
-    this.deltaX = random(-10, 10);
-    this.deltaY = random(-10, 10);
+    this.deltaX = random(-1, 1);
+    this.deltaY = random(-1, 1);
 
     // random color
     this.c = color(random(128, 255), random(128, 255), random(128, 255));
@@ -62,7 +63,8 @@ const dots = [];
 const border = 20;
 
 function setup() {
-  createCanvas(400, 400);
+  canvas.parent('sketch-frame');
+  createCanvas(600, 600);
 
   for (let layer = 1; layer <= 3; layer++) {
     for (let i = 0; i < 200; i++) {
@@ -73,7 +75,7 @@ function setup() {
 
 //function draw() {
 //  background(32);
-  
+
 //}
 
 class Dot {
@@ -82,8 +84,8 @@ class Dot {
     this.x = random(-border, width + border);
     this.y = random(-border, height + border);
 
-    this.r = random(255);
-    this.g = random(255);
+    this.r = random(1);
+    this.g = random(90);
   }
 
   draw() {
@@ -116,7 +118,7 @@ class Dot {
       this.x = random(0, width);
     }
 
-    fill(this.r, this.g, 0);
+    fill(this.r, this.g, 66);
     circle(this.x, this.y, 10 / (4 - this.layer));
   }
 }
