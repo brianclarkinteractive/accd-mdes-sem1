@@ -63,8 +63,8 @@ const dots = [];
 const border = 20;
 
 function setup() {
+  var canvas = createCanvas(600, 600);
   canvas.parent('sketch-frame');
-  createCanvas(600, 600);
 
   for (let layer = 1; layer <= 3; layer++) {
     for (let i = 0; i < 200; i++) {
