@@ -11,10 +11,14 @@ var boids = [];
 /**
  * Create the canvas and create boids randomly.
  */
+
+
+
 function setup() {
-  createCanvas(800, 600);
-  for (var i = 0; i < numBoids; i++) {
-    boids.push(new Boid(random(width), random(height)));
+    var canvas = createCanvas(800, 600);
+    canvas.parent('sketch-frame');
+    for (var i = 0; i < numBoids; i++) {
+        boids.push(new Boid(random(width), random(height)));
   }
 }
 
