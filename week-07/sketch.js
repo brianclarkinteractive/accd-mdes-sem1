@@ -1,7 +1,7 @@
 const WIDTH = window.innerWidth;
 const HEIGHT = window.innerHeight;
 const FRAMERATE = 60;
-const NUMBALLS = 22;
+const NUMBALLS = 111;
 
 let mouse = null;
 
