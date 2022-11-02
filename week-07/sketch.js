@@ -1,164 +1,130 @@
-const WIDTH = window.innerWidth;
-const HEIGHT = window.innerHeight;
-const FRAMERATE = 60;
-const NUMBALLS = 111;
+/*
+ * Implementation of http://www.kfish.org/boids/pseudocode.html in P5.js
+ * with rule 1 modification to follow mouse.
+ *
+ * Triangle geometry taken from Dan Shiffman.
+ */
 
-let mouse = null;
+var numBoids = 100;
+var boids = [];
 
-window.addEventListener('load', () => {
-    // Init Canvas & Context
-    const canvas = document.getElementById('main');
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = WIDTH;
-    canvas.height = HEIGHT;
-
-    // Init Balls
-    const balls = [];
-    for (let i = 0; i < NUMBALLS; i++) {
-        balls.push(new Ball(ctx, Math.randomRange(5, 8)));
-    }
-
-    // Update Mouse Vector
-    mouse = new Vector(0, 0);
-
-    const rect = canvas.getBoundingClientRect();
-    const root = document.documentElement;
-    canvas.addEventListener('mousemove', e => mouse.set(e.clientX - rect.left - root.scrollLeft, e.clientY - rect.top - root.scrollTop));
-
-    // Draw Loop
-    window.setInterval(() => draw(ctx, balls), 1000 / FRAMERATE);
-});
-
-function draw(ctx, Objects) {
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
-    Objects.forEach(obj => {
-        obj.update();
-        obj.draw();
-    });
+/**
+ * Create the canvas and create boids randomly.
+ */
+function setup() {
+  createCanvas(800, 600);
+  for (var i = 0; i < numBoids; i++) {
+    boids.push(new Boid(random(width), random(height)));
+  }
 }
 
-class Ball {
-    constructor(ctx, radius) {
-        this.ctx = ctx;
-        this.radius = radius;
-        this.weight = radius;
-        this.position = Vector.getRandomVector(WIDTH, HEIGHT);
-        this.velocity = new Vector(0, 0);
-        this.acceleration = new Vector(0, 0);
+/**
+ * Boids try to fly towards the mouse pointer.
+ */
+ruleFlyToMouse = function(bi, boid) {
+  var bipc = createVector(mouseX, mouseY);
 
-        Ball.maxPosition = new Vector(WIDTH, HEIGHT);
-        Ball.maxMag = Ball.maxPosition.mag();
-    }
+  var v = p5.Vector.sub(bipc, boid.position);
+  v.div(100);
 
-    update() {
-        this._accelerateTowardsMouse();
-
-        this.velocity.add(this.acceleration);
-        this.velocity.limit(20);
-        if (Math.random() < 0.1) { // 10% probability of adding noise
-            this.velocity.add(new Vector(Math.randomRange(-5, 5), Math.randomRange(-5, 5)));
-        }
-
-        this.position.add(this.velocity);
-
-        this._boundaryCheck();
-    }
-
-    _accelerateTowardsMouse() {
-        let dir = Vector.subtract(mouse, this.position);
-        let closeness = (Ball.maxMag - dir.mag()) / Ball.maxMag;
-
-        dir.normalize();
-        dir.mult(closeness);
-
-        this.acceleration = dir;
-    }
-
-    _boundaryCheck() {
-        if (this.position.x < 0) {
-            this.velocity.x *= -1;
-            this.position.x = 0;
-        } else if (this.position.x > WIDTH) {
-            this.velocity.x *= -1;
-            this.position.x = WIDTH;
-        } else if (this.position.y < 0) {
-            this.velocity.y *= -1;
-            this.position.y = 0;
-        } else if (this.position.y > HEIGHT) {
-            this.velocity.y *= -1;
-            this.position.y = HEIGHT;
-        }
-    }
-
-    draw() {
-        this.ctx.beginPath();
-        this.ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
-
-        this.ctx.fillStyle = 'yellow';
-        this.ctx.fill();
-
-        this.ctx.lineWidth = this.radius / 8;
-        this.ctx.strokeStyle = '#FFFFE0';
-        this.ctx.stroke();
-    }
+  return v;
 }
 
-class Vector {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
+/**
+ * Boids try to keep a small distance away from other objects
+ * (including other boids).
+ */
+ruleFlyCloseToOthers = function(bi, boid) {
+  var c = createVector();
 
-    set(x, y) {
-        this.x = x;
-        this.y = y;
-    }
+  for (var i = 0; i < boids.length; i++) {
+    if (bi != i) {
+      var b = boids[i];
+      var a = p5.Vector.sub(b.position, boid.position);
 
-    add(v) {
-        this.x += v.x;
-        this.y += v.y;
+      if (a.mag() < boid.diameter) {
+        c.sub(a);
+      }
     }
+  }
 
-    subtract(v) {
-        this.x -= v.x;
-        this.y -= v.y;
-    }
-
-    mult(scalar) {
-        this.x *= scalar;
-        this.y *= scalar;
-    }
-
-    div(scalar) {
-        this.x /= scalar;
-        this.y /= scalar;
-    }
-
-    normalize() {
-        this.div(this.mag());
-    }
-
-    mag() {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
-    }
-
-    limit(max) {
-        if (this.mag() > max) {
-            this.normalize();
-            this.mult(max);
-        }
-    }
-
-    static subtract(v1, v2) {
-        return new Vector(v1.x - v2.x, v1.y - v2.y);
-    }
-
-    static getRandomVector(xMax, yMax) {
-        return new Vector (Math.randomRange(0, xMax), Math.randomRange(0, yMax));
-    }
+  return c;
 }
 
-Math.__proto__.randomRange = (min, max) => (Math.random() * (max - min) + min);
+/**
+ * Boids try to match velocity with near boids.
+ */
+ruleFlyAtSimilarVelocityToOthers = function(bi, boid) {
+  var pv = createVector();
+
+  for (var i = 0; i < boids.length; i++) {
+    if (bi != i) {
+      pv.add(boids[i].velocity);
+    }
+  }
+
+  pv.div(boids.length - 1);
+
+  var v = p5.Vector.sub(pv, boid.velocity);
+  v.div(8);
+
+  return v;
+}
+
+/**
+ * Render the boids.
+ */
+function draw() {
+
+  background(0);
+  fill(255);
+  noStroke();
+
+  for (var i = 0; i < boids.length; i++) {
+    var b = boids[i];
+
+    b.draw();
+
+    var v1 = ruleFlyToMouse(i, b);
+    var v2 = ruleFlyCloseToOthers(i, b);
+    var v3 = ruleFlyAtSimilarVelocityToOthers(i, b);
+
+    b.velocity.add(v1);
+    b.velocity.add(v2);
+    b.velocity.add(v3);
+
+		b.position.add(b.velocity);
+  }
+}
+
+/**
+ * The Boid class.
+ */
+var Boid = function(x, y) {
+
+  this.diameter = 15;
+  this.position = createVector(x, y);
+  this.velocity = createVector(0);
+  this.r = 3;
+
+  this.draw = function() {
+
+    // Nice idea from Dan Shiffman to prevent over acceleration
+    this.velocity.limit(3);
+
+    // Draw triangle boid as tri pointed in direction of velocity
+    // Taken from Dan Shiffman's Nature of Code boid draw function
+    // https://github.com/shiffman/The-Nature-of-Code-Examples-p5.js/tree/master/chp06_agents/NOC_6_09_Flocking
+    var theta = this.velocity.heading() + radians(90);
+
+    push();
+    translate(this.position.x, this.position.y);
+    rotate(theta);
+    beginShape();
+    vertex(0, -this.r*2);
+    vertex(-this.r, this.r*2);
+    vertex(this.r, this.r*2);
+    endShape(CLOSE);
+    pop();
+  }
+}
