@@ -7,7 +7,8 @@ let singlePose,skeleton;
 let specs;
 
 function setup() {  // this function runs only once while running
-    createCanvas(800, 500);
+    var canvas = createCanvas(800, 500);
+    canvas.parent('sketch-frame');
     //console.log("setup funct");
     capture = createCapture(VIDEO);
     capture.hide();
