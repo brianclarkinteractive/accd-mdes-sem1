@@ -1,0 +1,83 @@
+/* Reset */
+
+body { 
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* Main section styles */
+
+h1,h3 {font-family: 'Open Sans', helvetica, sans-serif;
+    color: white;
+}
+
+h1 {font-weight: 400;
+    font-size: 32px;
+}
+
+h3 {font-weight: 300;
+    font-style: italic;
+    font-size: 16px;
+}
+main {
+    float: left;
+    padding-left: 16px;
+}
+
+.no-btm-border {
+    border-bottom: none;
+}
+
+p { color: white;
+    font-family: 'Open Sans', helvetica, sans-serif;}
+
+li {color: white;
+    font-family: 'Open Sans', helvetica, sans-serif;
+}
+
+ul {color: white;
+    font-family: 'Open Sans', helvetica, sans-serif;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+    main {float: left;
+        padding-left: 24px;]
+    }
+    nav ul {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        float: left;
+        margin-right: 16px;
+    }
+    nav li {
+        border-bottom: .5px white solid;
+        margin-left: 16px;
+        padding: 16px;
+    }
+    nav a {
+        color: white;
+    }
+    body { background-color: black;
+    }
+    h1,h3 {
+        color: white;
+        text-align: left;
+    }
+    h1 {
+        font-weight: 500;
+        font-size: 64px;
+    }
+    
+    h3 {
+        font-weight: 300;
+        font-style: italic;
+        font-size: 32px;
+    }
+}

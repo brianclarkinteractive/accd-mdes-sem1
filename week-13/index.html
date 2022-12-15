@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single-Channel Controller</title>
+
+    <!-- CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <main>
+        <h1>Challenge</h1>
+        <p>Create a simple signle-channel controller that would allow you to change one parameter in a Processing program by applying a value received from ESP32 via serial communication. Experiment with the parameters you can control with the values.</p>
+        <p>Try to use a different sensor to generate that value - other than a potentiometer.</p>
+        <p>Capture images of the build process and a video of the final results. Post with written explanation of the process on your website</p>
+        <ul>
+            <li>Starting with a build I had for increasing the diameter of a circle using the knob, I wanted to change the code so when I turned the knob it updated the color fill of the circle. With help from my instructor, we updated the color mode to HSB, created a variable for myColor and mapped the Hue to the knob value.</li>
+        </ul>
+        <h3>Demo</h3>
+        <video controls="controls" width="400px" height="225px" name="Demo">
+            <source src="assets/demo.mov">
+        </video>
+        <h3>Setup</h3>
+        <img src="assets/setup.png" height="400px">
+    </main>
+</body>
+</html>
